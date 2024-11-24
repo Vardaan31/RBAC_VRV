@@ -44,6 +44,13 @@ Step 4: Start the app by
 npm start
 ```
 
+Step 5: Login using ADMIN credentials.
+
+```bash
+email: admin@gmail.com
+password: admin
+```
+
 ## Author
 
 - [**Vardaan Abrol**](https://vardaanabrol.vercel.app)
