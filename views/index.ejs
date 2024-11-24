@@ -1,0 +1,329 @@
+<%- include('./layouts/header') %>
+
+<div id="particles-js" class="fixed inset-0 z-0"></div>
+
+<div class="relative z-10 min-h-screen bg-[#b3d4de] text-gray-800 p-2 sm:p-4 md:p-6 lg:p-8">
+  <header class="mb-4 md:mb-6">
+    <h1 class="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold mb-2 text-gray-900">RBAC Dashboard</h1>
+    <p class="text-xs sm:text-sm md:text-base text-gray-700">Manage users, roles, and permissions efficiently</p>
+  </header>
+
+  <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2 sm:gap-4 mb-4 sm:mb-6">
+    <div class="stats-card sm:w-3vw" id="total-clients">
+      <h2 class="text-xs sm:text-sm md:text-base font-semibold mb-1">Total Clients</h2>
+      <p class="stat-value text-lg sm:text-xl md:text-2xl lg:text-3xl font-bold">178</p>
+    </div>
+    <div class="stats-card" id="admin-count">
+      <h2 class="text-xs sm:text-sm md:text-base font-semibold mb-1">Admins</h2>
+      <p class="stat-value text-lg sm:text-xl md:text-2xl lg:text-3xl font-bold">15</p>
+    </div>
+    <div class="stats-card" id="moderator-count">
+      <h2 class="text-xs sm:text-sm md:text-base font-semibold mb-1">Moderators</h2>
+      <p class="stat-value text-lg sm:text-xl md:text-2xl lg:text-3xl font-bold">120</p>
+    </div>
+  </div>
+
+  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2 sm:gap-4 mb-4 sm:mb-6">
+    <div class="bg-white rounded-lg shadow-lg p-3 sm:p-4 md:p-5">
+      <h3 class="text-base sm:text-lg md:text-xl font-semibold mb-2 sm:mb-3 text-gray-800">Quick Actions</h3>
+      <div class="space-y-2">
+        <a href="/users" class="block w-full py-1 sm:py-2 px-2 sm:px-4 bg-blue-500 text-white rounded text-xs sm:text-sm hover:bg-blue-600 transition duration-300 text-center">Manage Users</a>
+        <a href="/roles" class="block w-full py-1 sm:py-2 px-2 sm:px-4 bg-green-500 text-white rounded text-xs sm:text-sm hover:bg-green-600 transition duration-300 text-center">Manage Roles</a>
+        <a href="/permissions" class="block w-full py-1 sm:py-2 px-2 sm:px-4 bg-yellow-500 text-white rounded text-xs sm:text-sm hover:bg-yellow-600 transition duration-300 text-center">Manage Permissions</a>
+      </div>
+    </div>
+    <div class="bg-white rounded-lg shadow-lg p-3 sm:p-4 md:p-5">
+      <h3 class="text-base sm:text-lg md:text-xl font-semibold mb-2 sm:mb-3 text-gray-800">Recent Activities</h3>
+      <ul class="space-y-2" id="recentActivityList">
+        <li class="bg-gray-100 rounded p-1 sm:p-2 text-xs sm:text-sm">
+          <strong class="block sm:inline">John Doe</strong> <span class="block sm:inline">created a new role <span class="text-blue-600">Editor</span></span>
+        </li>
+        <li class="bg-gray-100 rounded p-1 sm:p-2 text-xs sm:text-sm">
+          <strong class="block sm:inline">Jane Smith</strong> <span class="block sm:inline">modified permissions for role <span class="text-blue-600">Admin</span></span>
+        </li>
+        <li class="bg-gray-100 rounded p-1 sm:p-2 text-xs sm:text-sm">
+          <strong class="block sm:inline">Mike Johnson</strong> <span class="block sm:inline">added a new user <span class="text-blue-600">sarah@example.com</span></span>
+        </li>
+      </ul>
+    </div>
+    <div class="bg-white rounded-lg shadow-lg p-3 sm:p-4 md:p-5">
+      <h3 class="text-base sm:text-lg md:text-xl font-semibold mb-2 sm:mb-3 text-gray-800">System Health</h3>
+      <div class="space-y-2 sm:space-y-3">
+        <div>
+          <h4 class="text-xs sm:text-sm md:text-base font-medium mb-1">API Status</h4>
+          <div class="flex items-center">
+            <div class="w-2 h-2 sm:w-3 sm:h-3 rounded-full bg-green-500 mr-2"></div>
+            <span class="text-xs sm:text-sm">Operational</span>
+          </div>
+        </div>
+        <div>
+          <h4 class="text-xs sm:text-sm md:text-base font-medium mb-1">Last Backup</h4>
+          <p class="text-xs sm:text-sm">2023-05-15 03:00 AM</p>
+        </div>
+        <div>
+          <h4 class="text-xs sm:text-sm md:text-base font-medium mb-1">Server Load</h4>
+          <div class="w-full bg-gray-200 rounded-full h-1.5 sm:h-2">
+            <div class="bg-blue-600 h-1.5 sm:h-2 rounded-full" style="width: 70%"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-2 sm:gap-4 mb-4 sm:mb-6">
+    <div class="bg-white rounded-lg shadow-lg p-3 sm:p-4 md:p-5">
+      <h3 class="text-base sm:text-lg md:text-xl font-semibold mb-2 sm:mb-3 text-gray-800">Permissions Overview</h3>
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 sm:gap-3" id="permissionToggles">
+        <div class="flex items-center justify-between">
+          <span class="text-xs sm:text-sm">View Dashboard</span>
+          <label class="switch">
+            <input type="checkbox" checked>
+            <span class="slider round"></span>
+          </label>
+        </div>
+        <div class="flex items-center justify-between">
+          <span class="text-xs sm:text-sm">Manage Users</span>
+          <label class="switch">
+            <input type="checkbox">
+            <span class="slider round"></span>
+          </label>
+        </div>
+        <div class="flex items-center justify-between">
+          <span class="text-xs sm:text-sm">Edit Roles</span>
+          <label class="switch">
+            <input type="checkbox">
+            <span class="slider round"></span>
+          </label>
+        </div>
+        <div class="flex items-center justify-between">
+          <span class="text-xs sm:text-sm">Generate Reports</span>
+          <label class="switch">
+            <input type="checkbox" checked>
+            <span class="slider round"></span>
+          </label>
+        </div>
+      </div>
+    </div>
+    <div class=" p-3 sm:p-4 md:p-5">
+      <h3 class="text-base sm:text-lg md:text-xl font-semibold mb-2 sm:mb-3 text-gray-800">Role Distribution</h3>
+      <div class="h-40 sm:h-48 md:h-56 lg:h-64">
+        <canvas id="roleDistributionChart"></canvas>
+      </div>
+    </div>
+  </div>
+
+  <div class=" p-3 sm:p-4 md:p-5">
+    <h3 class="text-base sm:text-lg md:text-xl font-semibold mb-2 sm:mb-3 text-gray-800">Weekly Logins</h3>
+    <div class="h-40 sm:h-48 md:h-56 lg:h-64">
+      <canvas id="weeklyLoginsChart"></canvas>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/tsparticles@2.9.3/tsparticles.bundle.min.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  // Particle effect
+  tsParticles.load("particles-js", {
+    fullScreen: {
+      enable: true,
+      zIndex: -1
+    },
+    background: {
+      color: {
+        value: "#b3d4de",
+      },
+    },
+    fpsLimit: 120,
+    interactivity: {
+      events: {
+        onClick: {
+          enable: true,
+          mode: "push"
+        },
+        onHover: {
+          enable: true,
+          mode: "repulse"
+        },
+        resize: true
+      },
+      modes: {
+        push: {
+          quantity: 4
+        },
+        repulse: {
+          distance: 200,
+          duration: 0.4
+        }
+      }
+    },
+    particles: {
+      color: {
+        value: ["#1e3a8a", "#fb923c", "#facc15"]
+      },
+      links: {
+        color: "#64748b",
+        distance: 150,
+        enable: true,
+        opacity: 0.5,
+        width: 1
+      },
+      move: {
+        direction: "none",
+        enable: true,
+        outModes: {
+          default: "bounce"
+        },
+        random: false,
+        speed: 2,
+        straight: false
+      },
+      number: {
+        density: {
+          enable: true,
+          area: 800
+        },
+        value: 80
+      },
+      opacity: {
+        value: 0.5
+      },
+      shape: {
+        type: "circle"
+      },
+      size: {
+        value: { min: 1, max: 5 }
+      }
+    },
+    detectRetina: true
+  });
+
+  // Add interactivity to stats cards
+  document.querySelectorAll('.stats-card').forEach(card => {
+    card.addEventListener('mouseover', () => {
+      card.classList.add('transform', 'scale-105', 'transition-transform');
+    });
+    card.addEventListener('mouseout', () => {
+      card.classList.remove('transform', 'scale-105', 'transition-transform');
+    });
+  });
+
+  // Initialize charts
+  const roleDistributionCtx = document.getElementById('roleDistributionChart').getContext('2d');
+  new Chart(roleDistributionCtx, {
+    type: 'pie',
+    data: {
+      labels: ['Admin', 'Editor', 'Viewer', 'Manager', 'Guest'],
+      datasets: [{
+        data: [15, 30, 45, 25, 63],
+        backgroundColor: ['#3b82f6', '#10b981', '#f59e0b', '#ef4444', '#8b5cf6']
+      }]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      plugins: {
+        legend: {
+          position: 'right',
+          labels: {
+            boxWidth: 12,
+            padding: 10,
+            font: {
+              size: function(context) {
+                var width = context.chart.width;
+                return width < 300 ? 8 : width < 400 ? 10 : 12;
+              }
+            }
+          }
+        },
+        title: {
+          display: false,
+          text: 'Role Distribution'
+        }
+      }
+    }
+  });
+
+  const weeklyLoginsCtx = document.getElementById('weeklyLoginsChart').getContext('2d');
+  new Chart(weeklyLoginsCtx, {
+    type: 'line',
+    data: {
+      labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+      datasets: [{
+        label: 'Logins',
+        data: [65, 59, 80, 81, 56, 55, 40],
+        fill: false,
+        borderColor: '#3b82f6',
+        tension: 0.1
+      }]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      plugins: {
+        legend: {
+          display: false
+        },
+        title: {
+          display: false,
+          text: 'Weekly Logins'
+        }
+      },
+      scales: {
+        y: {
+          beginAtZero: true,
+          ticks: {
+            maxTicksLimit: 5,
+            callback: function(value, index, values) {
+              return value.toLocaleString();
+            }
+          }
+        },
+        x: {
+          ticks: {
+            font: {
+              size: function(context) {
+                var width = context.chart.width;
+                return width < 300 ? 8 : width < 400 ? 10 : 12;
+              }
+            }
+          }
+        }
+      }
+    }
+  });
+});
+</script>
+
+<style>
+.stats-card {
+  @apply bg-white rounded-lg shadow-lg p-2 sm:p-3 md:p-4 transition-all duration-300 cursor-pointer;
+}
+.switch {
+  @apply relative inline-block w-8 h-4 sm:w-10 sm:h-5;
+}
+.switch input {
+  @apply opacity-0 w-0 h-0;
+}
+.slider {
+  @apply absolute cursor-pointer top-0 left-0 right-0 bottom-0 bg-gray-300 transition-all duration-300 rounded-full;
+}
+.slider:before {
+  @apply absolute content-[''] h-3 w-3 sm:h-4 sm:w-4 left-0.5 bottom-0.5 bg-white transition-all duration-300 rounded-full;
+}
+input:checked + .slider {
+  @apply bg-blue-500;
+}
+input:checked + .slider:before {
+  @apply transform translate-x-4 sm:translate-x-5;
+}
+</style>
+
+<%- include('./layouts/footer') %>
+
+
+
+
+
+

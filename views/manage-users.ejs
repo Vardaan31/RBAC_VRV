@@ -1,0 +1,444 @@
+<%- include ('layouts/header') %>
+<link rel="stylesheet" href="/styles/manage-users.css">
+
+<div class="container">
+  <h1>Manage Users</h1>
+
+  <div class="table-responsive">
+  <table class="table">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Email</th>
+        <th>Role</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% users.forEach(user => { %>
+      <tr>
+        <td data-label="ID"><%= user.id %></td>
+        <td data-label="Email"><a href="/admin/user/<%= user.id %>"><%= user.email %></a></td>
+        <td data-label="Role">
+          <form
+            action="/admin/update-role"
+            method="post"
+            class="manage-user-form"
+            id="form-<%= user.id %>"
+          >
+            <input type="hidden" name="id" value="<%= user.id %>" />
+            <select name="role" id="role-<%= user.id %>">
+              <option value="ADMIN" <%= user.role === 'ADMIN' ? 'selected' : '' %>>Admin</option>
+              <option value="MODERATOR" <%= user.role === 'MODERATOR' ? 'selected' : '' %>>Moderator</option>
+              <option value="CLIENT" <%= user.role === 'CLIENT' ? 'selected' : '' %>>Client</option>
+            </select>
+            <div class="button-group">
+              <input type="submit" value="Update" class="update-btn">
+              <button type="button" class="delete-btn">Delete</button>
+              <input type="submit" value="U" class="update-btn-small">
+              <button type="button" class="delete-btn-small">D</button>
+            </div>
+          </form>
+        </td>
+      </tr>
+      <% }) %>
+    </tbody>
+  </table>
+</div>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  const forms = document.querySelectorAll('.manage-user-form');
+  forms.forEach(form => {
+    const select = form.querySelector('select');
+    const submit = form.querySelector('.update-btn');
+    const submitSmall = form.querySelector('.update-btn-small');
+    let originalValue = select.value;
+
+    select.addEventListener('change', function() {
+      if (this.value !== originalValue) {
+        submit.style.backgroundColor = '#f44336';
+        submitSmall.style.backgroundColor = '#f44336';
+      } else {
+        submit.style.backgroundColor = '#4caf50';
+        submitSmall.style.backgroundColor = '#4caf50';
+      }
+    });
+
+    form.addEventListener('submit', function(e) {
+      e.preventDefault();
+      if (select.value !== originalValue) {
+        if (confirm('Are you sure you want to update this user\'s role?')) {
+          this.submit();
+        } else {
+          select.value = originalValue;
+          submit.style.backgroundColor = '#4caf50';
+          submitSmall.style.backgroundColor = '#4caf50';
+        }
+      }
+    });
+  });
+});
+</script>
+
+<%- include ('layouts/footer') %>
+
+
+
+<style>
+body {
+  font-family: 'Arial', sans-serif;
+  background-color: #e8f5e9;
+  color: #333;
+  line-height: 1.6;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+h1 {
+  color: #2e7d32;
+  text-align: center;
+  margin-bottom: 30px;
+  font-size: 2.5rem;
+}
+
+.table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  background-color: #fff;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.table th,
+.table td {
+  padding: 12px 15px;
+  text-align: left;
+}
+
+.table thead {
+  background-color: #4caf50;
+  color: #fff;
+}
+
+.table tbody tr:nth-child(even) {
+  background-color: #f8f8f8;
+}
+
+.table tbody tr:hover {
+  background-color: #e8f5e9;
+  transition: background-color 0.3s ease;
+}
+
+.table a {
+  color: #1976d2;
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.table a:hover {
+  color: #1565c0;
+}
+
+.manage-user-form {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+select,
+input[type="submit"] {
+  padding: 8px 12px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 14px;
+}
+
+select {
+  background-color: #fff;
+  cursor: pointer;
+}
+
+input[type="submit"] {
+  background-color: #4caf50;
+  color: #fff;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+input[type="submit"]:hover {
+  background-color: #45a049;
+}
+
+.update-btn,
+.delete-btn {
+  display: inline-block;
+  padding: 8px 12px;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: background-color 0.3s ease;
+}
+
+.update-btn {
+  background-color: #4caf50;
+}
+
+.update-btn:hover {
+  background-color: #45a049;
+}
+
+.delete-btn {
+  background-color: #f44336;
+}
+
+.delete-btn:hover {
+  background-color: #d32f2f;
+}
+
+.update-btn-small,
+.delete-btn-small {
+  display: none;
+}
+
+.button-group {
+  display: flex;
+  gap: 5px;
+}
+
+@media screen and (max-width: 768px) {
+  .table {
+    font-size: 14px;
+  }
+
+  .table th,
+  .table td {
+    padding: 8px 10px;
+  }
+
+  .manage-user-form {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  select,
+  input[type="submit"] {
+    width: 100%;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .table {
+    font-size: 12px;
+  }
+
+  .table th,
+  .table td {
+    padding: 6px 8px;
+  }
+
+  h1 {
+    font-size: 2rem;
+  }
+}
+
+@media screen and (max-width: 600px) {
+  .container {
+    padding: 10px;
+    max-width: 100vw;
+  }
+
+  .table {
+    font-size: 3.5vw;
+    width: 95vw;
+  }
+
+  .table thead {
+    display: none;
+  }
+
+  .table, .table tbody, .table tr, .table td {
+    display: block;
+    width: 100%;
+  }
+
+  .table tr {
+    margin-bottom: 15px;
+    border: 1px solid #4caf50;
+    border-radius: 4px;
+    overflow: hidden;
+  }
+
+  .table td {
+    text-align: left;
+    padding: 2vw;
+    position: relative;
+  }
+
+  .table td:before {
+    content: attr(data-label);
+    display: inline-block;
+    width: 30%;
+    font-weight: bold;
+  }
+
+  .table td:first-of-type {
+    display: none;
+  }
+
+  .manage-user-form {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 2vw;
+  }
+
+  .manage-user-form select {
+    width: 40vw;
+    padding: 1vw;
+    font-size: 3.5vw;
+  }
+
+  .button-group {
+    display: flex;
+    gap: 2vw;
+  }
+
+  .update-btn-small,
+  .delete-btn-small {
+    display: inline-block;
+    padding: 2vw;
+    font-size: 3.5vw;
+    min-width: 10vw;
+  }
+
+  .table, .table tbody, .table thead {
+    width: 100%;
+    max-width: 100vw;
+  }
+
+  .table td, .table th {
+    box-sizing: border-box;
+    word-break: break-word;
+  }
+
+  .table td:before {
+    width: 25%;
+    padding-right: 1vw;
+  }
+
+  .manage-user-form {
+    flex-wrap: wrap;
+  }
+
+  .manage-user-form select {
+    width: 60%;
+  }
+
+  .button-group {
+    width: 35%;
+    justify-content: flex-end;
+  }
+
+  .update-btn-small,
+  .delete-btn-small {
+    padding: 1vw;
+    font-size: 3vw;
+    min-width: 12vw;
+  }
+
+  .update-btn,
+  .delete-btn {
+    display: none;
+  }
+
+  .update-btn-small,
+  .delete-btn-small {
+    display: inline-block;
+  }
+}
+
+
+.button-group {
+  display: flex;
+  gap: 5px;
+}
+
+.update-btn,
+.delete-btn {
+  padding: 8px 12px;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: background-color 0.3s ease;
+}
+
+.update-btn {
+  background-color: #4caf50;
+}
+
+.update-btn:hover {
+  background-color: #45a049;
+}
+
+.delete-btn {
+  background-color: #f44336;
+}
+
+.delete-btn:hover {
+  background-color: #d32f2f;
+}
+
+.update-btn-small,
+.delete-btn-small {
+  display: none;
+  padding: 8px;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: background-color 0.3s ease;
+}
+
+.update-btn-small {
+  background-color: #4caf50;
+}
+
+.delete-btn-small {
+  background-color: #f44336;
+}
+
+@media screen and (max-width: 600px) {
+  .update-btn,
+  .delete-btn {
+    display: none;
+  }
+
+  .update-btn-small,
+  .delete-btn-small {
+    display: inline-block;
+  }
+}
+
+
+
+
+
+
+
+
+</style>
+

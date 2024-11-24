@@ -1,0 +1,171 @@
+<%- include('./layouts/header') %>
+
+<div class="min-h-screen bg-[#43635c] py-6 sm:py-12 px-4 sm:px-6 lg:px-8">
+  <div class="max-w-4xl mx-auto">
+    <div class="bg-white bg-opacity-90 backdrop-filter backdrop-blur-lg rounded-xl shadow-2xl overflow-hidden transform transition-all duration-300 hover:shadow-3xl">
+      <!-- Header Section -->
+      <div class="relative h-36 sm:h-48 bg-gradient-to-r from-emerald-600 to-green-700">
+        <div class="absolute bottom-0 left-0 w-full h-16 sm:h-24 bg-gradient-to-t from-white to-transparent"></div>
+        <div class="absolute -bottom-12 sm:-bottom-16 left-4 sm:left-8">
+          <div class="w-24 h-24 sm:w-32 sm:h-32 rounded-full bg-white p-2 shadow-xl">
+            <div class="w-full h-full rounded-full bg-gradient-to-br from-green-500 to-emerald-600 flex items-center justify-center">
+              <span class="text-3xl sm:text-4xl font-bold text-white"><%= person.email.charAt(0).toUpperCase() %></span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Profile Content -->
+      <div class="px-4 sm:px-8 pt-16 sm:pt-20 pb-8">
+        <div class="flex flex-col sm:flex-row justify-between items-start mb-8">
+          <div class="mb-4 sm:mb-0">
+            <h1 class="text-2xl sm:text-3xl font-extrabold text-gray-900 mb-2"><%= person.email.split('@')[0] %></h1>
+            <div class="flex flex-wrap items-center space-x-2">
+              <span class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium 
+                <%= person.role === 'ADMIN' ? 'bg-red-100 text-red-800' : 
+                   person.role === 'MODERATOR' ? 'bg-amber-100 text-amber-800' : 
+                   'bg-emerald-100 text-emerald-800' %>">
+                <%= person.role %>
+              </span>
+              <span class="text-gray-500 hidden sm:inline">•</span>
+              <span class="text-gray-500">ID: <%= person.id %></span>
+            </div>
+          </div>
+          <button onclick="history.back()" class="group inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-emerald-600 hover:bg-emerald-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-emerald-500 transition-all duration-300 ease-in-out transform hover:scale-105">
+            <svg class="w-5 h-5 mr-2 transform group-hover:-translate-x-1 transition-transform duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
+            </svg>
+            Back
+          </button>
+        </div>
+
+        <!-- Interactive Tabs -->
+        <div class="mb-8">
+          <div class="border-b border-gray-200">
+            <nav class="-mb-px flex space-x-4 sm:space-x-8" aria-label="Tabs">
+              <button onclick="switchTab('overview')" class="tab-button active border-emerald-500 text-emerald-600 whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm">Overview</button>
+              <button onclick="switchTab('details')" class="tab-button border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300 whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm">Details</button>
+            </nav>
+          </div>
+        </div>
+
+        <!-- Tab Content -->
+        <div id="overview" class="tab-content active">
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
+            <div class="bg-gradient-to-br from-green-50 to-emerald-50 rounded-xl p-4 sm:p-6 shadow-sm hover:shadow-md transition-shadow duration-300">
+              <div class="flex items-center space-x-3 mb-4">
+                <div class="p-2 bg-green-100 rounded-lg">
+                  <svg class="w-5 h-5 sm:w-6 sm:h-6 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
+                  </svg>
+                </div>
+                <div>
+                  <p class="text-xs sm:text-sm font-medium text-gray-500">Email</p>
+                  <p class="text-base sm:text-lg font-semibold text-gray-900 break-all"><%= person.email %></p>
+                </div>
+              </div>
+            </div>
+
+            <div class="bg-gradient-to-br from-emerald-50 to-teal-50 rounded-xl p-4 sm:p-6 shadow-sm hover:shadow-md transition-shadow duration-300">
+              <div class="flex items-center space-x-3 mb-4">
+                <div class="p-2 bg-emerald-100 rounded-lg">
+                  <svg class="w-5 h-5 sm:w-6 sm:h-6 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path>
+                  </svg>
+                </div>
+                <div>
+                  <p class="text-xs sm:text-sm font-medium text-gray-500">Role</p>
+                  <p class="text-base sm:text-lg font-semibold text-gray-900"><%= person.role %></p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div id="details" class="tab-content hidden">
+          <div class="bg-white rounded-xl shadow-sm overflow-hidden">
+            <div class="overflow-x-auto">
+              <table class="min-w-full divide-y divide-gray-200">
+                <thead class="bg-green-50">
+                  <tr>
+                    <th scope="col" class="px-4 sm:px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">KEY</th>
+                    <th scope="col" class="px-4 sm:px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Value</th>
+                  </tr>
+                </thead>
+                <tbody class="bg-white divide-y divide-gray-200">
+                  <% Object.entries(person._doc).forEach(([key, value]) => { %>
+                    <tr class="hover:bg-green-50 transition-colors duration-200">
+                      <td class="px-4 sm:px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900"><%= key %></td>
+                      <td class="px-4 sm:px-6 py-4 whitespace-pre-wrap text-sm text-gray-500 break-all">
+                        <%= value %>
+                      </td>
+                    </tr>
+                  <% }) %>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+function switchTab(tabId) {
+  // Hide all tab contents
+  document.querySelectorAll('.tab-content').forEach(content => {
+    content.classList.add('hidden');
+    content.classList.remove('active');
+  });
+  
+  // Show selected tab content
+  const selectedTab = document.getElementById(tabId);
+  selectedTab.classList.remove('hidden');
+  selectedTab.classList.add('active');
+  
+  // Update tab buttons
+  document.querySelectorAll('.tab-button').forEach(button => {
+    button.classList.remove('border-emerald-500', 'text-emerald-600');
+    button.classList.add('border-transparent', 'text-gray-500');
+  });
+  
+  // Update active tab button
+  event.target.classList.remove('border-transparent', 'text-gray-500');
+  event.target.classList.add('border-emerald-500', 'text-emerald-600');
+}
+
+// Add smooth reveal animation on page load
+document.addEventListener('DOMContentLoaded', function() {
+  const profileCard = document.querySelector('.max-w-4xl > div');
+  profileCard.style.opacity = '0';
+  profileCard.style.transform = 'translateY(20px)';
+  
+  setTimeout(() => {
+    profileCard.style.transition = 'all 0.6s ease-out';
+    profileCard.style.opacity = '1';
+    profileCard.style.transform = 'translateY(0)';
+  }, 100);
+});
+</script>
+
+<style>
+.tab-content.active {
+  animation: fadeIn 0.5s ease-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+</style>
+
+<%- include('./layouts/footer') %>
+
+
