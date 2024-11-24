@@ -4,8 +4,6 @@ This is my implementation of the Role Based Access Control assignment for VRV Se
 
 Built as part of the technical assessment for VRV Security AI's authentication module requirements, this solution implements secure role-based access control that can serve as a foundation for enterprise-level security implementations.
 
-For the current implementation, I've focused on Email & Password authentication, though the architecture supports easy integration of additional authentication methods via OAuth/OAuth2.0 (Google, Facebook, Apple, GitHub, etc.) as per future requirements.
-
 The application follows the **MVC pattern** (Model View Controller) for clean code organization and maintainability.
 
 **Mongoose** is used as an ORM for MongoDB for storing Users in Database.
