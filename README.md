@@ -49,6 +49,8 @@ email: admin@gmail.com
 password: admin
 ```
 
+Note: Please **refresh** the home page **once** if small screen shows error in responsiveness. Thank you!
+
 ## Author
 
 - [**Vardaan Abrol**](https://vardaanabrol.vercel.app)
