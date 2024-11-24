@@ -8,18 +8,18 @@
     <p class="text-xs sm:text-sm md:text-base text-gray-700">Manage users, roles, and permissions efficiently</p>
   </header>
 
-  <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2 sm:gap-4 mb-4 sm:mb-6">
-    <div class="stats-card sm:w-3vw" id="total-clients">
-      <h2 class="text-xs sm:text-sm md:text-base font-semibold mb-1">Total Clients</h2>
-      <p class="stat-value text-lg sm:text-xl md:text-2xl lg:text-3xl font-bold">178</p>
+  <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mb-6">
+    <div class="stats-card" id="total-clients">
+      <h2 class="text-sm sm:text-base font-semibold mb-1">Total Clients</h2>
+      <p class="stat-value text-2xl sm:text-3xl md:text-4xl font-bold">178</p>
     </div>
     <div class="stats-card" id="admin-count">
-      <h2 class="text-xs sm:text-sm md:text-base font-semibold mb-1">Admins</h2>
-      <p class="stat-value text-lg sm:text-xl md:text-2xl lg:text-3xl font-bold">15</p>
+      <h2 class="text-sm sm:text-base font-semibold mb-1">Admins</h2>
+      <p class="stat-value text-2xl sm:text-3xl md:text-4xl font-bold">15</p>
     </div>
     <div class="stats-card" id="moderator-count">
-      <h2 class="text-xs sm:text-sm md:text-base font-semibold mb-1">Moderators</h2>
-      <p class="stat-value text-lg sm:text-xl md:text-2xl lg:text-3xl font-bold">120</p>
+      <h2 class="text-sm sm:text-base font-semibold mb-1">Moderators</h2>
+      <p class="stat-value text-2xl sm:text-3xl md:text-4xl font-bold">120</p>
     </div>
   </div>
 
@@ -27,22 +27,22 @@
     <div class="bg-white rounded-lg shadow-lg p-3 sm:p-4 md:p-5">
       <h3 class="text-base sm:text-lg md:text-xl font-semibold mb-2 sm:mb-3 text-gray-800">Quick Actions</h3>
       <div class="space-y-2">
-        <a href="/users" class="block w-full py-1 sm:py-2 px-2 sm:px-4 bg-blue-500 text-white rounded text-xs sm:text-sm hover:bg-blue-600 transition duration-300 text-center">Manage Users</a>
-        <a href="/roles" class="block w-full py-1 sm:py-2 px-2 sm:px-4 bg-green-500 text-white rounded text-xs sm:text-sm hover:bg-green-600 transition duration-300 text-center">Manage Roles</a>
-        <a href="/permissions" class="block w-full py-1 sm:py-2 px-2 sm:px-4 bg-yellow-500 text-white rounded text-xs sm:text-sm hover:bg-yellow-600 transition duration-300 text-center">Manage Permissions</a>
+        <a href="/" class="block w-full py-1 sm:py-2 px-2 sm:px-4 bg-blue-500 text-white rounded text-xs sm:text-sm hover:bg-blue-600 transition duration-300 text-center">Manage Users</a>
+        <a href="/" class="block w-full py-1 sm:py-2 px-2 sm:px-4 bg-green-500 text-white rounded text-xs sm:text-sm hover:bg-green-600 transition duration-300 text-center">Manage Roles</a>
+        <a href="/" class="block w-full py-1 sm:py-2 px-2 sm:px-4 bg-yellow-500 text-white rounded text-xs sm:text-sm hover:bg-yellow-600 transition duration-300 text-center">Manage Permissions</a>
       </div>
     </div>
     <div class="bg-white rounded-lg shadow-lg p-3 sm:p-4 md:p-5">
       <h3 class="text-base sm:text-lg md:text-xl font-semibold mb-2 sm:mb-3 text-gray-800">Recent Activities</h3>
       <ul class="space-y-2" id="recentActivityList">
         <li class="bg-gray-100 rounded p-1 sm:p-2 text-xs sm:text-sm">
-          <strong class="block sm:inline">John Doe</strong> <span class="block sm:inline">created a new role <span class="text-blue-600">Editor</span></span>
+          <strong class="block sm:inline">Vardaan Abrol</strong> <span class="block sm:inline">created a new role <span class="text-blue-600">Editor</span></span>
         </li>
         <li class="bg-gray-100 rounded p-1 sm:p-2 text-xs sm:text-sm">
-          <strong class="block sm:inline">Jane Smith</strong> <span class="block sm:inline">modified permissions for role <span class="text-blue-600">Admin</span></span>
+          <strong class="block sm:inline">Random1</strong> <span class="block sm:inline">modified permissions for role <span class="text-blue-600">Admin</span></span>
         </li>
         <li class="bg-gray-100 rounded p-1 sm:p-2 text-xs sm:text-sm">
-          <strong class="block sm:inline">Mike Johnson</strong> <span class="block sm:inline">added a new user <span class="text-blue-600">sarah@example.com</span></span>
+          <strong class="block sm:inline">Random2</strong> <span class="block sm:inline">added a new user <span class="text-blue-600">sarah@example.com</span></span>
         </li>
       </ul>
     </div>
@@ -120,7 +120,8 @@
   </div>
 </div>
 
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<!-- integrating chart.js and tsparticles -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>     
 <script src="https://cdn.jsdelivr.net/npm/tsparticles@2.9.3/tsparticles.bundle.min.js"></script>
 <script>
 document.addEventListener('DOMContentLoaded', function() {
@@ -244,7 +245,7 @@ document.addEventListener('DOMContentLoaded', function() {
       }
     }
   });
-
+  //defining default logic
   const weeklyLoginsCtx = document.getElementById('weeklyLoginsChart').getContext('2d');
   new Chart(weeklyLoginsCtx, {
     type: 'line',

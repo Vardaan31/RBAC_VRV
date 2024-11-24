@@ -113,29 +113,29 @@
 
 <script>
 function switchTab(tabId) {
-  // Hide all tab contents
+  // Hiding all tab contents
   document.querySelectorAll('.tab-content').forEach(content => {
     content.classList.add('hidden');
     content.classList.remove('active');
   });
   
-  // Show selected tab content
+  // Showing selected tab content
   const selectedTab = document.getElementById(tabId);
   selectedTab.classList.remove('hidden');
   selectedTab.classList.add('active');
   
-  // Update tab buttons
+  // Updating tab buttons
   document.querySelectorAll('.tab-button').forEach(button => {
     button.classList.remove('border-emerald-500', 'text-emerald-600');
     button.classList.add('border-transparent', 'text-gray-500');
   });
   
-  // Update active tab button
+  // Updating active tab button
   event.target.classList.remove('border-transparent', 'text-gray-500');
   event.target.classList.add('border-emerald-500', 'text-emerald-600');
 }
 
-// Add smooth reveal animation on page load
+// Adding smooth reveal animation on page load
 document.addEventListener('DOMContentLoaded', function() {
   const profileCard = document.querySelector('.max-w-4xl > div');
   profileCard.style.opacity = '0';

@@ -81,18 +81,3 @@ router.get(
 
 module.exports = router;
 
-// function ensureAuthenticated(req, res, next) {
-//   if (req.isAuthenticated()) {
-//     next();
-//   } else {
-//     res.redirect('/auth/login');
-//   }
-// }
-
-// function ensureNOTAuthenticated(req, res, next) {
-//   if (req.isAuthenticated()) {
-//     res.redirect('back');
-//   } else {
-//     next();
-//   }
-// }

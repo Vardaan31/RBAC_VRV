@@ -56,6 +56,8 @@ document.addEventListener('DOMContentLoaded', function() {
     const submitSmall = form.querySelector('.update-btn-small');
     let originalValue = select.value;
 
+    //drop down backend
+
     select.addEventListener('change', function() {
       if (this.value !== originalValue) {
         submit.style.backgroundColor = '#f44336';
@@ -66,6 +68,7 @@ document.addEventListener('DOMContentLoaded', function() {
       }
     });
 
+    //UPDATE button function to switch roles as per user
     form.addEventListener('submit', function(e) {
       e.preventDefault();
       if (select.value !== originalValue) {
